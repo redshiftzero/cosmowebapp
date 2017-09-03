@@ -1,0 +1,18 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+.axis {
+  shape-rendering: crispEdges;
+  stroke-width: 0.5;
+}
+.grid {
+  stroke-width: 0.5;
+}
+rect {
+  shape-rendering: crispEdges;
+}
+text {
+  font-family: sans-serif;
+  shape-rendering: crispEdges;
+}
