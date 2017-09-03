@@ -11,6 +11,7 @@ function interpolate(param, param_table, func_table) {
 	if ((i > 1) && (param_table[i] > param)){
 	    index1 = param_table[i-1];
 	    index2 = param_table[i];
+	    break;
 	}
     }
     if ((param_table[index1] =< param) && (param_table[index2] >= param)){
@@ -37,7 +38,28 @@ function interpolate(param, param_table, func_table) {
     
 };
 
-//Interpolate for plotting
-function interpolate1d(){
+//Interpolate 1D function, useful for plotting
+function interpolate1d(x_out, x_in, y_in){
+    index1 = 0
+    index2 = 1
+    
+    y_out = []
+    for (i = 0; i < x_out.length; i++){
+	x_desired = x_out[i];
+	for (i = index1; i < param_table.length; i++){
+	    if ((i > 1) && (x_in[i] > x_desired)){
+		index1 = param_table[i-1];
+		index2 = param_table[i];
+		break;
+	    }
+	}
+	
+	weight1 = (x_in[index2]-x_desired)/(x_in[index2] - x_in[index1]);
+	weight2 = (x_desired - x_in[index1])/(x_in[index2] - x_in[index1]);
+	y_out_i =  weight1*y_in[index1,i] + weight2*y_in[index2,i];
+	y_out.push(y_out_i);
+    }
 
+    return y_out;
+    
 }
