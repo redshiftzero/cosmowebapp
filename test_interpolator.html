@@ -4,8 +4,8 @@
   <meta charset="utf-8">
 
   <script src="src/js/d3.js"></script>
+  <script src="src/js/chart.js"></script>
   <script src="src/js/interpolator.js"></script>
-  <script src="src/js/plot.js"></script>
 
     <link rel="stylesheet" type="text/css" href="src/css/chart.css">
   </head>
@@ -13,34 +13,10 @@
     Interpolation test
     <svg width="960" height="500"></svg>
     <script type="text/javascript">
+      test_interpolator();
 
-      d3.tsv("data/test_matterpower.dat", function(error, data) {
-      if (error) throw error;
-
-      param_table = [0.1, 0.5, 0.7, 0.9];
-      param_desired = 0.3;
-
-      //Construct table for interpolation
-      Pk_table = [];
-      for (var i = 0; i < data.length; i++)
-			  {
-			  Pk_table.push([data[i].kh, data[i].Pk, data[i].Pk, data[i].Pk]);
-			  }
-
-			//Do interpolation
-			  
-			  newPk = interpolate(param_desired, param_table, Pk_table);
-			  
-			  console.log("Pk_table = ", Pk_table[0][0]);
-			  
-			  console.log("Pk new = ", newPk[0]);
-
-			  plot(Pk_table);
-			  
-      
-});
-
-      
+   //Do interpolation
+  // newPk = interpolate(param_desired, param_table, Pk_table);
     </script>
   </body>
 </html>

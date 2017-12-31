@@ -1,47 +1,87 @@
-function chart() {
-  var svg = d3.select("svg"),
-      margin = {top: 20, right: 20, bottom: 30, left: 50},
-      width = +svg.attr("width") - margin.left - margin.right,
-      height = +svg.attr("height") - margin.top - margin.bottom,
-      g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+function parse_camb(data) {
+  // Read in CAMB data files and return two clean arrays k/h, P(k)
+  var d = [];
+  for (var i = 1; i < data.length; i++) {
+      d.push({
+      'k_over_h': data[i].kh,
+      'matter_power': data[i].Pk
+      });
+  }
+  return d;
+}
 
-  var parseTime = d3.timeParse("%d-%b-%y");
+function chart(){
+    var margin = {top: 20, right: 20, bottom: 30, left: 50};
+    d3.tsv("data/test_matterpower.dat", function(data) {
+	d = parse_camb(data);
+//	console.log(d.matter_power);
+	g = plot_axes(margin);
+	plot_pk(d, g, margin);
+  });
+    
+}
 
-  var x = d3.scaleTime()
-      .rangeRound([0, width]);
+//Plot axes
+function plot_axes(margin){
+    var svg = d3.select("svg"),
+	margin = margin,
+	width = +svg.attr("width") - margin.left - margin.right,
+	height = +svg.attr("height") - margin.top - margin.bottom,
+	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    g.attr("width",width);
+    g.attr("height",height);
+    
 
-  var y = d3.scaleLinear()
-      .rangeRound([height, 0]);
+    var x = d3.scaleLog().range([margin.left, width - margin.right]).domain([0.00005, 10.0]);
 
-  var line = d3.line()
-      .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.close); });
+    var y = d3.scaleLog().range([height - margin.top, margin.bottom]).domain([10.0, 100000.0]);
 
-  d3.tsv("data/fake.csv", function(d) {
-    d.date = parseTime(d.date);
-    d.close = +d.close;
-    return d;
-  }, function(error, data) {
-    if (error) throw error;
 
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain(d3.extent(data, function(d) { return d.close; }));
+    var xAxis = d3.axisBottom()
+      .scale(x);
+
+    var yAxis = d3.axisLeft()
+	.scale(y);
 
     g.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
-      .select(".domain")
-        .remove();
+        .call(xAxis)
+        .append("text")
+        .attr("fill", "#000")
+        .attr("x", 870)
+        .attr("y", -4)
+        .attr("dx", "0.71em")
+        .attr("font-size", "15px")
+        .attr("text-anchor", "middle")
+        .text("k");
 
     g.append("g")
-        .call(d3.axisLeft(y))
-      .append("text")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(yAxis)
+        .append("text")
         .attr("fill", "#000")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", "0.71em")
+        .attr("font-size", "15px")
         .attr("text-anchor", "end")
-        .text("Price ($)");
+        .text("P(k)");
+
+    return g
+}
+
+//Plot power spectrum given data and svg "g"
+function plot_pk(data, g, margin) {
+    var width = g.attr("width");
+    var height = g.attr("height");
+
+  var x = d3.scaleLog().range([margin.left, width-margin.right]).domain([0.00005, 10.0]);
+
+  var y = d3.scaleLog().range([height-margin.bottom, margin.top]).domain([10.0, 100000.0]);
+
+  var line = d3.line()
+      .x(function(d,i) { return x(data[i]["k_over_h"]); })
+      .y(function(d,i) { return y(data[i]["matter_power"]); });
 
     g.append("path")
         .datum(data)
@@ -51,5 +91,4 @@ function chart() {
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
         .attr("d", line);
-  });
-};
+}

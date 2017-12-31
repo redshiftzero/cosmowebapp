@@ -1,3 +1,17 @@
+function test_interpolator(){
+   var margin = {top: 20, right: 20, bottom: 30, left: 50};
+   d3.tsv("data/test_matterpower.dat", function(data1) {
+    d1 = parse_camb(data1);
+    d3.tsv("data/test_matterpower2.dat", function(data2) {
+	d2 = parse_camb(data2);
+	g = plot_axes(margin);
+	plot_pk(d1, g, margin);
+	plot_pk(d2, g, margin);
+    });
+
+  });
+}
+
 function interpolate(param, param_table, func_table) {
     //param is desired value of parameter (i.e. Omega_M, n_s, Om h^2)
     //param_table is table of param values for which we've precomputed function
@@ -21,21 +35,10 @@ function interpolate(param, param_table, func_table) {
 	//error!
     }
 
-    console.log("upper index = ", upperindex);
-    console.log("lower index = ", lowerindex);
-    console.log("param = ", param);
-    console.log("upper = ", param_table[upperindex]);
-    console.log("lower = ", param_table[lowerindex]);
-
     //Determine weights for function at lowerindex and upperindex
     //double check this
     weight1 = (param_table[upperindex]-param)/(param_table[upperindex] - param_table[lowerindex]);
     weight2 = (param - param_table[lowerindex])/(param_table[upperindex] - param_table[lowerindex]);
-
-    console.log("weight 1 = ", weight1);
-    console.log("weight 2 = ", weight2);
-    console.log("fuc table dim0 = ", func_table.length);
-    console.log("fuc table dim1 = ", func_table[0].length);
     
     //Generate output array
     //is this the right way to do this?
