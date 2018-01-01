@@ -12,34 +12,40 @@ function test_interpolator(){
   });
 }
 
+function determine_bounding_indices(param, param_table) {
+    lowerindex = 0;
+    upperindex = 1;
+    if (param < param_table[0]) {
+      // Then the parameter in question is out of range (too small)
+      return [null, null];
+    }
+
+    for (i = 1; i < param_table.length; i++){
+      if (param_table[i] > param){
+        // Then we are in the correct range
+        lowerindex = i-1;
+        upperindex = i;
+        return [lowerindex, upperindex];
+      }
+    }
+
+    // Then the parameter in question is out of range (too large)
+    return [null, null];
+}
+
 function interpolate(param, param_table, func_table) {
     //param is desired value of parameter (i.e. Omega_M, n_s, Om h^2)
     //param_table is table of param values for which we've precomputed function
     //func_table is matrix of function evals (either P(k) or C(ell)
     //   dimension is (len(param_table), len(P(k)))
 
-    //Determine indices that bound input value
-    lowerindex = 0;
-    upperindex = 1;
-    for (i = 1; i < param_table.length; i++){
-	if (param_table[i] > param){
-	    lowerindex = i-1;
-	    upperindex = i;
-	    break;
-	}
-    }
-    if ((param_table[lowerindex] <= param) && (param_table[upperindex] >= param)){
-	//success
-    }
-    else{
-	//error!
-    }
+    [lowerindex, upperindex] = determine_bounding_indices(param, param_table);
 
     //Determine weights for function at lowerindex and upperindex
     //double check this
     weight1 = (param_table[upperindex]-param)/(param_table[upperindex] - param_table[lowerindex]);
     weight2 = (param - param_table[lowerindex])/(param_table[upperindex] - param_table[lowerindex]);
-    
+
     //Generate output array
     //is this the right way to do this?
     output_array = [];
@@ -49,14 +55,14 @@ function interpolate(param, param_table, func_table) {
     }
 
     return output_array;
-    
+
 };
 
 //Interpolate 1D function, useful for plotting
 function interpolate1d(x_out, x_in, y_in){
     lowerindex = 0;
     upperindex = 1;
-    
+
     y_out = []
     for (i = 0; i < x_out.length; i++){
 	x_desired = x_out[i];
@@ -67,7 +73,7 @@ function interpolate1d(x_out, x_in, y_in){
 		break;
 	    }
 	}
-	
+
 	weight1 = (x_in[upperindex]-x_desired)/(x_in[upperindex] - x_in[lowerindex]);
 	weight2 = (x_desired - x_in[lowerindex])/(x_in[upperindex] - x_in[lowerindex]);
 	y_out_i =  weight1*y_in[lowerindex,i] + weight2*y_in[upperindex,i];
@@ -75,5 +81,5 @@ function interpolate1d(x_out, x_in, y_in){
     }
 
     return y_out;
-    
+
 }
