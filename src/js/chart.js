@@ -66,7 +66,6 @@ function plot_axes(margin){
         .attr("font-size", "15px")
         .attr("text-anchor", "end")
         .text("P(k)");
-
     return g
 }
 
@@ -84,7 +83,7 @@ function plot_pk(data, g, margin) {
       .y(function(d,i) { return y(data[i]["matter_power"]); });
 
     g.append("path")
-        .datum(data)
+        .datum(d)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-linejoin", "round")
