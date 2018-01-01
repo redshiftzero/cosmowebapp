@@ -39,6 +39,15 @@ function compute_weights(param, param_lower, param_upper) {
   return [weight1, weight2];
 }
 
+function interpolate_between_two_lines(weight1, weight2, func_table_lower, func_table_upper) {
+  output_array = [];
+  for (i = 0; i < func_table_upper.length; i++){
+    new_val = weight1*func_table_lower[i] + weight2*func_table_upper[i];
+    output_array.push(new_val);
+  }
+  return output_array;
+}
+
 function interpolate(param, param_table, func_table) {
     //param is desired value of parameter (i.e. Omega_M, n_s, Om h^2)
     //param_table is table of param values for which we've precomputed function
@@ -55,17 +64,7 @@ function interpolate(param, param_table, func_table) {
     func_table_lower = func_table[lowerindex];
     func_table_upper = func_table[upperindex];
     output_array = interpolate_between_two_lines(weight1, weight2, func_table_lower, func_table_upper);
-
-    //Generate output array
-    //is this the right way to do this?
-    output_array = [];
-    for (i = 0; i < func_table[0].length; i++){
-	new_val = weight1*func_table[lowerindex][i] + weight2*func_table[upperindex][i];
-	output_array.push(new_val);
-    }
-
     return output_array;
-
 };
 
 //Interpolate 1D function, useful for plotting
