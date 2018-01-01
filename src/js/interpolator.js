@@ -33,6 +33,12 @@ function determine_bounding_indices(param, param_table) {
     return [null, null];
 }
 
+function compute_weights(param, param_lower, param_upper) {
+  weight1 = (param_upper - param)/(param_upper - param_lower);
+  weight2 = (param - param_lower)/(param_upper - param_lower);
+  return [weight1, weight2];
+}
+
 function interpolate(param, param_table, func_table) {
     //param is desired value of parameter (i.e. Omega_M, n_s, Om h^2)
     //param_table is table of param values for which we've precomputed function
@@ -42,9 +48,13 @@ function interpolate(param, param_table, func_table) {
     [lowerindex, upperindex] = determine_bounding_indices(param, param_table);
 
     //Determine weights for function at lowerindex and upperindex
-    //double check this
-    weight1 = (param_table[upperindex]-param)/(param_table[upperindex] - param_table[lowerindex]);
-    weight2 = (param - param_table[lowerindex])/(param_table[upperindex] - param_table[lowerindex]);
+    param_lower = param_table[lowerindex];
+    param_upper = param_table[upperindex];
+    [weight1, weight2] = compute_weights(param, param_lower, param_upper);
+
+    func_table_lower = func_table[lowerindex];
+    func_table_upper = func_table[upperindex];
+    output_array = interpolate_between_two_lines(weight1, weight2, func_table_lower, func_table_upper);
 
     //Generate output array
     //is this the right way to do this?
