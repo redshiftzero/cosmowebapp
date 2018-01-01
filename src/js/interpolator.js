@@ -2,7 +2,7 @@ function test_interpolator(){
    var margin = {top: 20, right: 20, bottom: 30, left: 50};
    d3.tsv("data/test_matterpower.dat", function(data1) {
     d1 = parse_camb(data1);
-    d3.tsv("data/test_matterpower2.dat", function(data2) {
+    d3.tsv("data/omega_m_h2_005_matterpower.dat", function(data2) {
 	d2 = parse_camb(data2);
 	g = plot_axes(margin);
 	plot_pk(d1, g, margin);
