@@ -42,3 +42,13 @@ QUnit.test( "verify weights computation correct for test parameter equidistant f
   assert.equal(weight1, 0.5, "weight1 computation correct");
   assert.equal(weight2, 0.5, "weight2 computation correct");
 });
+
+QUnit.test( "verify interpolation correct for test parameter equidistant from two parameters", function( assert ) {
+  var weight1 = 0.5;
+  var weight2 = 0.5;
+  var func_table_lower = [1, 2, 3, 4];
+  var func_table_upper = [3, 4, 5, 6];
+  output_array = interpolate_between_two_lines(weight1, weight2, func_table_lower, func_table_upper);
+  expected_array = [2, 3, 4, 5];
+  assert.deepEqual(output_array, expected_array, "interpolation correct");
+});
