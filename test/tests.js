@@ -33,3 +33,12 @@ QUnit.test( "verify bounding indices return nulls if param too small", function(
   assert.equal(lowerindex, null, "lowerindex is set correctly");
   assert.equal(upperindex, null, "upperindex is set correctly");
 });
+
+QUnit.test( "verify weights computation correct for test parameter equidistant from two parameters", function( assert ) {
+  var param = 0.25;
+  var param_lower = 0.2;
+  var param_upper = 0.3;
+  [weight1, weight2] = compute_weights(param, param_lower, param_upper);
+  assert.equal(weight1, 0.5, "weight1 computation correct");
+  assert.equal(weight2, 0.5, "weight2 computation correct");
+});
