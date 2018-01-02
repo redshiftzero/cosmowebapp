@@ -1,16 +1,86 @@
-function test_interpolator(){
-   var margin = {top: 20, right: 20, bottom: 30, left: 50};
-   d3.tsv("data/test_matterpower.dat", function(data1) {
-    d1 = parse_camb(data1);
-    d3.tsv("data/omega_m_h2_005_matterpower.dat", function(data2) {
-	d2 = parse_camb(data2);
-	g = plot_axes(margin);
-	plot_pk(d1, g, margin);
-	plot_pk(d2, g, margin);
-    });
 
+function test_interpolator(){
+    var margin = {top: 20, right: 20, bottom: 30, left: 50};
+
+    pk1 = get_k_pk_from_table(pk_table, 0)
+    pk2 = get_k_pk_from_table(pk_table, 1)
+    
+    g = plot_axes(margin);
+    plot_pk(pk1, g, margin);
+    plot_pk(pk2, g, margin);
+
+    //Interpolate between these two P(k)
+    var omh2_desired = 0.1;
+    var omh2_table = [0.005,0.3];
+    var newpk = interpolate(omh2_desired, omh2_table, pk_table) ;
+    //create new array with k and P(k) for plotting
+    var pk3 = [];
+    for (var i = 0; i < newpk.length; i++){
+	pk3.push([pk1[i][0], newpk[i]]);
+    }
+    console.log("Test a = ", pk3[10][0]);
+    console.log("Test b = ", pk3[11][1]);
+    console.log("Test c = ", pk1[10][0]);
+    console.log("Test d = ", pk1[11][1]);
+   
+    plot_pk(pk3, g, margin);
+}
+
+function old_interpolator_test(){
+   var margin = {top: 20, right: 20, bottom: 30, left: 50};
+   d3.text("data/test_matterpower.dat", function(data1) {
+    pk1 = parse_camb(data1);
+    d3.text("data/omega_m_h2_005_matterpower.dat", function(data2) {
+	pk2 = parse_camb(data2);
+	g = plot_axes(margin);
+	plot_pk(pk1, g, margin);
+	plot_pk(pk2, g, margin);
+    });
   });
 }
+
+function process_pk_table(error, textData){
+    if (error) return console.log(error);
+
+    var k_array;
+    var pk_array;
+    for (var i = 0; i < textData.length; i++){
+	k_array = parse_camb_k(textData[i]);
+	pk_array = parse_camb_pk(textData[i]);
+	console.log("i = ", i);
+	if (i == 0){
+	    pk_table.push(k_array);
+	}
+	// Add this data to table
+	//pk_table[0][i] = k
+	//pk_table[1...][i] = P(k)
+	pk_table.push(pk_array);
+    }
+    test_interpolator();
+}
+
+function test_full(){
+    var filename_list = ["data/test_matterpower.dat", "data/omega_m_h2_005_matterpower.dat"];
+
+    var q = d3.queue();
+    for (var fi = 0; fi < filename_list.length; fi++){
+	q.defer(d3.text, filename_list[fi]);
+    }
+    q.awaitAll(process_pk_table);
+}
+
+function get_k_pk_from_table(pk_table, index){
+    //Given a P(k) table, get k and Pk array for a particular index
+    console.log("index  = ", index);
+    var d = [];
+    for (i = 0; i < pk_table[0].length; i++){
+	d.push(
+	    [pk_table[0][i], pk_table[index+1][i]]
+	);
+    }
+    return d
+}
+
 
 function determine_bounding_indices(param, param_table) {
     lowerindex = 0;
@@ -52,17 +122,22 @@ function interpolate(param, param_table, func_table) {
     //param is desired value of parameter (i.e. Omega_M, n_s, Om h^2)
     //param_table is table of param values for which we've precomputed function
     //func_table is matrix of function evals (either P(k) or C(ell)
-    //   dimension is (len(param_table), len(P(k)))
+    //   dimension is (1+len(param_table), len(P(k)))
 
-    [lowerindex, upperindex] = determine_bounding_indices(param, param_table);
-
+    [lower_temp, upper_temp] = determine_bounding_indices(param, param_table);
+    lowerindex = lower_temp;
+    upperindex = upper_temp;
+    
     //Determine weights for function at lowerindex and upperindex
     param_lower = param_table[lowerindex];
     param_upper = param_table[upperindex];
     [weight1, weight2] = compute_weights(param, param_lower, param_upper);
 
-    func_table_lower = func_table[lowerindex];
-    func_table_upper = func_table[upperindex];
+    console.log("weight1 = ", weight1);
+
+    //+1 since first column is either k or ell
+    func_table_lower = func_table[lowerindex+1];
+    func_table_upper = func_table[upperindex+1];
     output_array = interpolate_between_two_lines(weight1, weight2, func_table_lower, func_table_upper);
     return output_array;
 };

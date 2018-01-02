@@ -11,15 +11,40 @@ function parse_camb_tsv(data) {
 }
 
 function parse_camb(data){
-  // Read in CAMB data files and return two clean arrays k/h, P(k)
+  // Read in CAMB data files and return array of k and P(k)
   var lines = data.split('\n');
   var d = [];
   for (i = 1; i < lines.length - 1; i++) {
     var line = lines[i].split('    ');
-    d.push({
-      'k_over_h': line[1],
-      'matter_power': line[2]
-    });
+    d.push(
+      [line[1],line[2]]
+    );
+  }
+  return d;
+}
+
+function parse_camb_k(data){
+  // Read in CAMB data files and return array of P(k)
+  var lines = data.split('\n');
+  var d = [];
+  for (i = 1; i < lines.length - 1; i++) {
+    var line = lines[i].split('    ');
+    d.push(
+	line[1]
+    );
+  }
+  return d;
+}
+
+function parse_camb_pk(data){
+  // Read in CAMB data files and return array of P(k)
+  var lines = data.split('\n');
+  var d = [];
+  for (i = 1; i < lines.length - 1; i++) {
+    var line = lines[i].split('    ');
+    d.push(
+      line[2]
+    );
   }
   return d;
 }
@@ -92,11 +117,13 @@ function plot_pk(data, g, margin) {
   var y = d3.scaleLog().range([height-margin.bottom, margin.top]).domain([10.0, 100000.0]);
 
   var line = d3.line()
-      .x(function(d,i) { return x(data[i]["k_over_h"]); })
-      .y(function(d,i) { return y(data[i]["matter_power"]); });
+      .x(function(d,i) { return x(data[i][0]); })
+      .y(function(d,i) { return y(data[i][1]); });
+//      .x(function(d,i) { return x(data[i]["k_over_h"]); })
+//      .y(function(d,i) { return y(data[i]["matter_power"]); });
 
     g.append("path")
-        .datum(d)
+        .datum(data)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-linejoin", "round")
