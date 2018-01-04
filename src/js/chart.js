@@ -30,7 +30,6 @@ function chart(){
 	g = plot_axes(margin);
 	plot_pk(d, g, margin);
   });
-    
 }
 
 //Plot axes

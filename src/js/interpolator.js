@@ -1,66 +1,27 @@
+var margin = {top: 20, right: 20, bottom: 30, left: 50};
 
+//Interpolate P(k) table and plot
 function run_interpolation(){
-    console.log("rinnnnnn");
-    var margin = {top: 20, right: 20, bottom: 30, left: 50};
 
     //Needed to get k array
-    pk1 = get_k_pk_from_table(pk_table, 0)
+    pk_initial = get_k_pk_from_table(pk_table, 0)
 
     //Set up plot axes
     g = plot_axes(margin);
 
-    //Get desired value from slider
-    var omh2_desired = paramValue;
-    var omh2_table = [0.005,0.3];
-    var newpk = interpolate(omh2_desired, omh2_table, pk_table) ;
+    var pk_interp = interpolate(paramValue, param_table, pk_table) ;
     //create new array with k and P(k) for plotting
-    var pk3 = [];
-    for (var i = 0; i < newpk.length; i++){
-	pk3.push([pk1[i][0], newpk[i]]);
+    var pk_to_plot = [];
+    for (var i = 0; i < pk_interp.length; i++){
+	pk_to_plot.push([pk_initial[i][0], pk_interp[i]]);
     }
-   
-    plot_pk(pk3, g, margin);
+
+    //Now plot interpolated P(k)
+    plot_pk(pk_to_plot, g, margin);
 }
 
-
-function test_interpolator(){
-    var margin = {top: 20, right: 20, bottom: 30, left: 50};
-
-    pk1 = get_k_pk_from_table(pk_table, 0)
-    pk2 = get_k_pk_from_table(pk_table, 1)
-
-    g = plot_axes(margin);
-
-    plot_pk(pk1, g, margin);
-    plot_pk(pk2, g, margin);
-
-    //Interpolate between these two P(k)
-    var omh2_desired = 0.1;
-    console.log("omh2_desred = ", omh2_desired);
-    var omh2_table = [0.005,0.3];
-    var newpk = interpolate(omh2_desired, omh2_table, pk_table) ;
-    //create new array with k and P(k) for plotting
-    var pk3 = [];
-    for (var i = 0; i < newpk.length; i++){
-	pk3.push([pk1[i][0], newpk[i]]);
-    }
-   
-    plot_pk(pk3, g, margin);
-}
-
-function old_interpolator_test(){
-   var margin = {top: 20, right: 20, bottom: 30, left: 50};
-   d3.text("data/test_matterpower.dat", function(data1) {
-    pk1 = parse_camb(data1);
-    d3.text("data/omega_m_h2_005_matterpower.dat", function(data2) {
-	pk2 = parse_camb(data2);
-	g = plot_axes(margin);
-	plot_pk(pk1, g, margin);
-	plot_pk(pk2, g, margin);
-    });
-  });
-}
-
+//Given text data read in from d3.text, process into
+//P(k) tables and then call interpolation function
 function process_pk_table(error, textData){
     if (error) return console.log(error);
 
@@ -85,12 +46,16 @@ function process_pk_table(error, textData){
 	//pk_table[1...][i] = P(k)
 	pk_table.push(pk_array);
     }
-    //test_interpolator();
     run_interpolation();
 }
 
-function test_full(){
-    var filename_list = ["data/test_matterpower.dat", "data/omega_m_h2_005_matterpower.dat"];
+//Load data and run plotting
+function run_pk_display(paramName){
+    console.log("Preparing for ", paramName);
+    if (paramName == 'Omh2'){
+	var filename_list = ["data/test_matterpower.dat", "data/omega_m_h2_005_matterpower.dat"];
+	param_table = [0.005,0.3];
+    }
 
     var q = d3.queue();
     for (var fi = 0; fi < filename_list.length; fi++){
@@ -151,7 +116,7 @@ function interpolate(param, param_table, func_table) {
     //param is desired value of parameter (i.e. Omega_M, n_s, Om h^2)
     //param_table is table of param values for which we've precomputed function
     //func_table is matrix of function evals (either P(k) or C(ell)
-    //   dimension is (1+len(param_table), len(P(k)))
+    //dimension is (1+len(param_table), len(P(k)))
 
     [lower_temp, upper_temp] = determine_bounding_indices(param, param_table);
     lowerindex = lower_temp;
@@ -168,29 +133,3 @@ function interpolate(param, param_table, func_table) {
     output_array = interpolate_between_two_lines(weight1, weight2, func_table_lower, func_table_upper);
     return output_array;
 };
-
-//Interpolate 1D function, useful for plotting
-function interpolate1d(x_out, x_in, y_in){
-    lowerindex = 0;
-    upperindex = 1;
-
-    y_out = []
-    for (i = 0; i < x_out.length; i++){
-	x_desired = x_out[i];
-	for (i = lowerindex; i < param_table.length; i++){
-	    if ((i > 1) && (x_in[i] > x_desired)){
-		lowerindex = param_table[i-1];
-		upperindex = param_table[i];
-		break;
-	    }
-	}
-
-	weight1 = (x_in[upperindex]-x_desired)/(x_in[upperindex] - x_in[lowerindex]);
-	weight2 = (x_desired - x_in[lowerindex])/(x_in[upperindex] - x_in[lowerindex]);
-	y_out_i =  weight1*y_in[lowerindex,i] + weight2*y_in[upperindex,i];
-	y_out.push(y_out_i);
-    }
-
-    return y_out;
-
-}
