@@ -35,6 +35,7 @@ function chart(){
 
 //Plot axes
 function plot_axes(margin){
+    d3.select("svg").selectAll("*").remove();
     var svg = d3.select("svg"),
 	margin = margin,
 	width = +svg.attr("width") - margin.left - margin.right,

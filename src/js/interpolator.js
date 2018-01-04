@@ -1,4 +1,28 @@
 
+function run_interpolation(){
+    console.log("rinnnnnn");
+    var margin = {top: 20, right: 20, bottom: 30, left: 50};
+
+    //Needed to get k array
+    pk1 = get_k_pk_from_table(pk_table, 0)
+
+    //Set up plot axes
+    g = plot_axes(margin);
+
+    //Get desired value from slider
+    var omh2_desired = paramValue;
+    var omh2_table = [0.005,0.3];
+    var newpk = interpolate(omh2_desired, omh2_table, pk_table) ;
+    //create new array with k and P(k) for plotting
+    var pk3 = [];
+    for (var i = 0; i < newpk.length; i++){
+	pk3.push([pk1[i][0], newpk[i]]);
+    }
+   
+    plot_pk(pk3, g, margin);
+}
+
+
 function test_interpolator(){
     var margin = {top: 20, right: 20, bottom: 30, left: 50};
 
@@ -6,11 +30,13 @@ function test_interpolator(){
     pk2 = get_k_pk_from_table(pk_table, 1)
 
     g = plot_axes(margin);
+
     plot_pk(pk1, g, margin);
     plot_pk(pk2, g, margin);
 
     //Interpolate between these two P(k)
     var omh2_desired = 0.1;
+    console.log("omh2_desred = ", omh2_desired);
     var omh2_table = [0.005,0.3];
     var newpk = interpolate(omh2_desired, omh2_table, pk_table) ;
     //create new array with k and P(k) for plotting
@@ -59,7 +85,8 @@ function process_pk_table(error, textData){
 	//pk_table[1...][i] = P(k)
 	pk_table.push(pk_array);
     }
-    test_interpolator();
+    //test_interpolator();
+    run_interpolation();
 }
 
 function test_full(){
