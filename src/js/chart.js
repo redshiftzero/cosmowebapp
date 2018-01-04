@@ -23,32 +23,6 @@ function parse_camb(data){
   return d;
 }
 
-function parse_camb_k(data){
-  // Read in CAMB data files and return array of P(k)
-  var lines = data.split('\n');
-  var d = [];
-  for (i = 1; i < lines.length - 1; i++) {
-    var line = lines[i].split('    ');
-    d.push(
-	line[1]
-    );
-  }
-  return d;
-}
-
-function parse_camb_pk(data){
-  // Read in CAMB data files and return array of P(k)
-  var lines = data.split('\n');
-  var d = [];
-  for (i = 1; i < lines.length - 1; i++) {
-    var line = lines[i].split('    ');
-    d.push(
-      line[2]
-    );
-  }
-  return d;
-}
-
 function chart(){
     var margin = {top: 20, right: 20, bottom: 30, left: 50};
     d3.text("data/test_matterpower.dat", function(data) {

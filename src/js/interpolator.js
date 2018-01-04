@@ -4,7 +4,7 @@ function test_interpolator(){
 
     pk1 = get_k_pk_from_table(pk_table, 0)
     pk2 = get_k_pk_from_table(pk_table, 1)
-    
+
     g = plot_axes(margin);
     plot_pk(pk1, g, margin);
     plot_pk(pk2, g, margin);
@@ -18,10 +18,6 @@ function test_interpolator(){
     for (var i = 0; i < newpk.length; i++){
 	pk3.push([pk1[i][0], newpk[i]]);
     }
-    console.log("Test a = ", pk3[10][0]);
-    console.log("Test b = ", pk3[11][1]);
-    console.log("Test c = ", pk1[10][0]);
-    console.log("Test d = ", pk1[11][1]);
    
     plot_pk(pk3, g, margin);
 }
@@ -42,13 +38,20 @@ function old_interpolator_test(){
 function process_pk_table(error, textData){
     if (error) return console.log(error);
 
-    var k_array;
-    var pk_array;
+    var camb_data;
     for (var i = 0; i < textData.length; i++){
-	k_array = parse_camb_k(textData[i]);
-	pk_array = parse_camb_pk(textData[i]);
-	console.log("i = ", i);
+	var k_array = [];
+	var pk_array = [];
+	camb_data = parse_camb(textData[i]);
+	//Get P(k)
+	for (var pi = 0; pi < camb_data.length; pi++){
+	    pk_array.push(camb_data[pi][1]);
+	}
+	//Make k the first column
 	if (i == 0){
+	    for (var ki = 0; ki < camb_data.length; ki++){
+		k_array.push(camb_data[ki][0]);
+	    }
 	    pk_table.push(k_array);
 	}
 	// Add this data to table
@@ -71,7 +74,6 @@ function test_full(){
 
 function get_k_pk_from_table(pk_table, index){
     //Given a P(k) table, get k and Pk array for a particular index
-    console.log("index  = ", index);
     var d = [];
     for (i = 0; i < pk_table[0].length; i++){
 	d.push(
@@ -132,8 +134,6 @@ function interpolate(param, param_table, func_table) {
     param_lower = param_table[lowerindex];
     param_upper = param_table[upperindex];
     [weight1, weight2] = compute_weights(param, param_lower, param_upper);
-
-    console.log("weight1 = ", weight1);
 
     //+1 since first column is either k or ell
     func_table_lower = func_table[lowerindex+1];
