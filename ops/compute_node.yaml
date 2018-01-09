@@ -1,0 +1,63 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Create new compute node.
+      digital_ocean:
+        state: present
+        command: droplet
+        name: camb-compute0
+        private_networking: yes
+        size_id: 512mb
+        image_id: debian-9-x64
+        region_id: sfo1
+        ssh_key_ids: 6696920
+        unique_name: yes  # for idempotence
+      register: do
+
+    - name: Add new host to inventory file.
+      add_host:
+        name: "{{ do.droplet.ip_address }}"
+        groups: do
+      when: do.droplet is defined
+
+- hosts: do
+  remote_user: root
+  gather_facts: false
+
+  tasks:
+    - name: Wait for port 22 to become available.
+      local_action: "wait_for port=22 host={{ inventory_hostname }}"
+
+    - name: Install required apt dependencies for building CAMB.
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - build-essential
+        - make
+        - gfortran
+
+    - name: Get CAMB source code.
+      get_url:
+        url: http://camb.info/CAMB_Jul15.tar.gz
+        dest: /root
+        sha256sum: a402a5462ef5de9cd40d7af67509857358e4a58ca18e61c743a63da71b04b5ce
+
+    - name: Unarchive CAMB source code.
+      unarchive:
+        src: /root/CAMB_Jul15.tar.gz
+        dest: /root
+        remote_src: yes
+
+    - name: Build CAMB.
+      make:
+        chdir: /root/camb/
+
+    - name: Symlink into /usr/local/bin
+      file:
+        src: /root/camb/camb
+        dest: /usr/local/bin/camb
+        state: link

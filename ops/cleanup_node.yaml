@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Delete CAMB computation node.
+      digital_ocean:
+        state: deleted
+        command: droplet
+        name: camb-compute0
+        private_networking: yes
+        size_id: 512mb
+        image_id: debian-9-x64
+        region_id: sfo1
+        ssh_key_ids: 6696920
+        unique_name: yes
+      register: do
