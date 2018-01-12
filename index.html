@@ -23,32 +23,41 @@
         <span id="omega-mh2-range-value">0.25</span> &Omega;<sub>m</sub>h<sup>2</sup>
       </div>
 
+      <div id="h-div" class="sliderdiv">
+        <input id="h-slider" class="slider" type="range" min="0.1" max="0.9" step="0.01" value="0.25"/>
+        <span id="h-range-value">0.7</span> h
+      </div>
+
       <div id="fix-omegamh2-div" class="checkdiv">
 	<input id = "fix-omegamh2-checkbox" type = "checkbox"> Fix  &Omega;<sub>m</sub>h<sup>2</sup>
       </div>
       
       
-      <svg width="960" height="500"></svg>
+      <svg width="960" height="400"></svg>
 
     </div>
+
     <script src="./src/js/d3.js"></script>
     <script src="./src/js/d3-queue.v3.min.js"></script>
     <script src="./src/js/sliders.js"></script>
     <script src="./src/js/checkboxes.js"></script>
     <script src="./src/js/chart.js"></script>
     <script src="./src/js/interpolator.js"></script>
+    <script src="./src/js/parse_data.js"></script>
     <script>
+      var paramValue = 0.3;       //this is a bads
+      var paramName = "Om";
+      var fix_omegamh2 = false;
+
       //chart();
       //old_interpolator_test();
       //test_interpolator();
-      var paramValue = 0.25;       //this is a bads
-      var paramName = 'Omh2';
       var pk_table = [];
       var param_table;
-      var fix_omegamh2 = false;
-
+      var s8_table;
+      
       //this should be re-run every time we change parameters
-      run_pk_display(paramName);
+      run_pk_display();
     </script>
   </body>
 
