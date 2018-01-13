@@ -75,17 +75,19 @@ omh2_slider.oninput = function() {
     paramName = "Omh2";
     //Set everything to defaults
     set_defaults();
-    //Set Omega_mh2 to desired value
-    omh2_slider.value = paramValue;
-    omh2_sliderValue.innerHTML = parseFloat(paramValue).toFixed(2);
-    //If we're using the same parameter, don't need to reload data
-    if (oldParam == paramName){
-	run_interpolation();
+    if (!fix_omegamh2){
+	//Set Omega_mh2 to desired value
+	omh2_slider.value = paramValue;
+	omh2_sliderValue.innerHTML = parseFloat(paramValue).toFixed(2);
+	//If we're using the same parameter, don't need to reload data
+	if (oldParam == paramName){
+	    run_interpolation();
+	}
+	//Otherwise reload data
+	if (oldParam != paramName){
+	    run_pk_display();
+	}
     }
-    //Otherwise reload data
-    if (oldParam != paramName){
-	run_pk_display();
-    }   
 }
 
 h_slider.oninput = function() {
