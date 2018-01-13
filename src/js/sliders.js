@@ -50,13 +50,20 @@ om_slider.oninput = function() {
     olam_slider.value = new_olam;
     olam_sliderValue.innerHTML = parseFloat(new_olam).toFixed(2);
     
-    //If necessary change the value of h
     if (fix_omegamh2){
 	var omh2 = omh2_slider.value;
 	var newh = Math.sqrt(omh2/paramValue);
 	h_slider.value = newh;
 	h_sliderValue.innerHTML = parseFloat(newh).toFixed(2);
     }
+
+    if (!fix_omegamh2){
+	var h = h_slider.value;
+	var new_omh2 = paramValue*h*h;
+	omh2_slider.value = new_omh2;
+	omh2_sliderValue.innerHTML = parseFloat(new_omh2).toFixed(2);
+    }
+
     //If we're using the same parameter, don't need to reload data
     if (oldParam == paramName){
 	run_interpolation();
@@ -75,10 +82,17 @@ omh2_slider.oninput = function() {
     paramName = "Omh2";
     //Set everything to defaults
     set_defaults();
+  
     if (!fix_omegamh2){
 	//Set Omega_mh2 to desired value
 	omh2_slider.value = paramValue;
 	omh2_sliderValue.innerHTML = parseFloat(paramValue).toFixed(2);
+
+	var om = om_slider.value;
+	var newh = Math.sqrt(paramValue/om);
+	h_slider.value = newh;
+	h_sliderValue.innerHTML = parseFloat(newh).toFixed(2);
+
 	//If we're using the same parameter, don't need to reload data
 	if (oldParam == paramName){
 	    run_interpolation();
