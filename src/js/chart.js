@@ -1,37 +1,3 @@
-function parse_camb_tsv(data) {
-  // Read in CAMB data files and return two clean arrays k/h, P(k)
-  var d = [];
-  for (var i = 1; i < data.length; i++) {
-      d.push({
-      'k_over_h': data[i].kh,
-      'matter_power': data[i].Pk
-      });
-  }
-  return d;
-}
-
-function parse_camb(data){
-  // Read in CAMB data files and return array of k and P(k)
-  var lines = data.split('\n');
-  var d = [];
-  for (i = 1; i < lines.length - 1; i++) {
-    var line = lines[i].split('    ');
-    d.push(
-      [line[1],line[2]]
-    );
-  }
-  return d;
-}
-
-function chart(){
-    var margin = {top: 20, right: 20, bottom: 30, left: 50};
-    d3.text("data/test_matterpower.dat", function(data) {
-	d = parse_camb(data);
-	g = plot_axes(margin);
-	plot_pk(d, g, margin);
-  });
-}
-
 //Plot axes
 function plot_axes(margin){
     d3.select("svg").selectAll("*").remove();
