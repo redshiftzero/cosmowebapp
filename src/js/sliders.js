@@ -31,6 +31,51 @@ function set_defaults(){
 
 }
 
+//Since we assume flatness treat Omega_lambda just as Omega_m
+olam_slider.oninput = function() {
+    var oldParam = paramName;
+    var currentValue = this.value;
+    var om = 1.0-currentValue;
+    paramValue = om;
+    paramName = "Om";
+
+    //Set everything to defaults
+    set_defaults();
+
+    //Set Omega_lam slider values 
+    olam_slider.value = currentValue;
+    olam_sliderValue.innerHTML = parseFloat(currentValue).toFixed(2);
+
+    //Set Omega_m to desired value
+    om_slider.value = om;
+    om_sliderValue.innerHTML = parseFloat(om).toFixed(2);
+
+   
+    if (fix_omegamh2){
+	var omh2 = omh2_slider.value;
+	var newh = Math.sqrt(omh2/paramValue);
+	h_slider.value = newh;
+	h_sliderValue.innerHTML = parseFloat(newh).toFixed(2);
+    }
+
+    if (!fix_omegamh2){
+	var h = h_slider.value;
+	var new_omh2 = paramValue*h*h;
+	omh2_slider.value = new_omh2;
+	omh2_sliderValue.innerHTML = parseFloat(new_omh2).toFixed(2);
+    }
+
+    //If we're using the same parameter, don't need to reload data
+    if (oldParam == paramName){
+	run_interpolation();
+    }
+    //Otherwise reload data
+    if (oldParam != paramName){
+	run_pk_display();
+    }   
+}
+
+
 om_slider.oninput = function() {
     var oldParam = paramName;
     var currentValue = this.value;
@@ -77,7 +122,7 @@ om_slider.oninput = function() {
 omh2_slider.oninput = function() {
     var oldParam = paramName;
     var currentValue = this.value;
-    omh2_sliderValue.innerHTML = parseFloat(currentValue).toFixed(2);
+
     paramValue = currentValue;
     paramName = "Omh2";
     //Set everything to defaults
