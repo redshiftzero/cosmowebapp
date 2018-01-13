@@ -1,6 +1,5 @@
 var margin = {top: 20, right: 20, bottom: 30, left: 50};
 
-
 //Interpolate P(k) table and plot
 function run_interpolation(){
    
@@ -10,6 +9,10 @@ function run_interpolation(){
     //console.log("param table = ", param_table);
 
     var pk_interp = interpolate(paramValue, param_table, pk_table) ;
+
+    //console.log("pk table = ", pk_table[0]);
+    //console.log("pk interp 0 = ", pk_interp[0]);
+    
     //create new array with k and P(k) for plotting
     var pk_to_plot = [];
     for (var i = 0; i < pk_interp.length; i++){
@@ -44,6 +47,9 @@ function run_pk_display(){
     }
     if (paramName == 'Om' && fix_omegamh2){
 	filename = 'data/pk_modeltype_fixomch2_param_om.txt';
+    }
+    if (paramName == 'Omh2' && !fix_omegamh2){
+	filename = 'data/pk_modeltype_fiducial_param_omch2.txt';
     }
     console.log("filename = ", filename);
     

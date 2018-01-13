@@ -51,8 +51,8 @@ def get_pk_cell(params):
 
 
 fiducial_model = {'H0':70., 'ombh2':0.022, 'omch2':0.122, 'omk':0., 'ns':0.96, 'As':2e-09, 'tau':0.06}    
-model_type = 'fixomch2' #fiducial or fixomch2
-param_name = 'om'
+model_type = 'fiducial' #fiducial or fixomch2
+param_name = 'h'
 
 if (param_name == 'om'):
     min_val = 0.1
@@ -62,6 +62,11 @@ if (param_name == 'om'):
 if (param_name == 'h'):
     min_val = 0.5
     max_val = 1.0
+    num_val = 10
+    param_list = np.linspace(min_val, max_val, num = num_val)
+if (param_name == 'omch2'):
+    min_val = 0.01
+    max_val = 0.5
     num_val = 10
     param_list = np.linspace(min_val, max_val, num = num_val)
 
@@ -76,6 +81,9 @@ for pi in xrange(0,len(param_list)):
             om = param_list[pi]
             omh2 = om*(fiducial_model['H0']/100.)**2.
             this_model['omch2'] = omh2
+        if (param_name == 'omch2'):
+            omh2 = param_list[pi]
+            this_model['omch2'] = omh2
         if (param_name == 'h'):
             h = param_list[pi]
             H0 = 100.*h
@@ -84,7 +92,7 @@ for pi in xrange(0,len(param_list)):
     if model_type == 'fixomch2':
         if (param_name == 'om'):
             om = param_list[pi]
-            H0 = np.sqrt(fiducial_model['omch2']/om)
+            H0 = 100.*np.sqrt(fiducial_model['omch2']/om)
             this_model['H0'] = H0
         if (param_name == 'h'):
             h = param_list[pi]
