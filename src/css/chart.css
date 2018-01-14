@@ -1,5 +1,19 @@
 * {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  color: black;
+}
+body {
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(to bottom right, #74ebd5, #acb6e5);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+h1 {
+  text-align: center;
+  font-family: 'Poiret One', cursive;
+  text-align: center;
+  padding: 10px;
 }
 .axis {
   shape-rendering: crispEdges;
@@ -14,6 +28,16 @@ rect {
 text {
   shape-rendering: crispEdges;
 }
+header {
+  max-width: 600px;
+  position: relative;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 10px 0 100px;
+}
 #main {
   max-width: 1060px;
   position: relative;
@@ -22,6 +46,7 @@ text {
   display: block;
   margin: 0 auto;
   padding: 0 10px;
+  text-align: center;
 }
 .slider {
   width: 435px;
@@ -36,6 +61,22 @@ footer {
   bottom: 0;
   left: 0;
   height: 70px;
-  background-color: white;
   width: 100%;
 }
+.social:hover {
+  color: #000000;
+   -webkit-transform: scale(1.1);
+   -moz-transform: scale(1.1);
+   -o-transform: scale(1.1);
+}
+.social {
+   color: #333333;
+   -webkit-transform: scale(0.8);
+   /* Browser Variations: */
+
+   -moz-transform: scale(0.8);
+   -o-transform: scale(0.8);
+   -webkit-transition-duration: 0.5s;
+   -moz-transition-duration: 0.5s;
+   -o-transition-duration: 0.5s;
+ }
