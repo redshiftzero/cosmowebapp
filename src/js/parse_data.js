@@ -11,18 +11,18 @@ function parse_camb_tsv(data) {
 }
 
 function parse_param(data){
-    // Read in CAMB data files and return array of k and P(k)
+    // Read in CAMB data files and return array of parameters
     var lines = data.split('\n');
     var param_line = lines[5].split(' ');
     var d = [];
     for (i = 1; i < param_line.length; i++){
-	d.push(parseFloat(param_line[i]));
+    	d.push(parseFloat(param_line[i]));
     }
     return d;
 }
 
 function parse_s8(data){
-    // Read in CAMB data files and return array of k and P(k)
+    // Read in CAMB data files and return sigma8
     var lines = data.split('\n');
     var s8_line = lines[6].split(' ');
     var d = [];
