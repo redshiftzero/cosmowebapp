@@ -19,7 +19,7 @@ function run_pk_interpolation(){
 
 function run_cl_interpolation(){
   var l_range = [1, 5000];
-  var cl_range = [1, 10000.0];
+  var cl_range = [50, 10000.0];
   g = plot_axes(margin, "#cl", "l", l_range, "C(l)", cl_range);
 
   var cl_interp = interpolate(paramValue, param_table_cl, cl_table);
