@@ -3,49 +3,31 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50};
 //Interpolate P(k) table and plot
 function run_pk_interpolation(){
   //Set up plot axes
-  g = plot_pk_axes(margin);
-
-  console.log("param table = ", param_table_pk);
+  g = plot_axes(margin, "#pk", "k", [0.00005, 10.0], "P(k)", [10.0, 1000000.0]);
 
   var pk_interp = interpolate(paramValue, param_table_pk, pk_table);
-
-  console.log("pk table = ", pk_table[0]);
-  console.log("pk interp 0 = ", pk_interp[0]);
 
   //create new array with k and P(k) for plotting
   var pk_to_plot = [];
   for (var i = 0; i < pk_interp.length - 1; i++){
-    console.log("test = ", pk_table[i][0]);
-    console.log("test = ", pk_interp[i]);
-    console.log("length = ", pk_interp.length);
     pk_to_plot.push([pk_table[i][0], pk_interp[i]]);
   }
 
-  console.log('pk_to_plot')
-  console.log(pk_to_plot)
-
-  // Now plot interpolated P(k) and C(l)
-  plot_pk(pk_to_plot, g, margin);
+  plot_spectrum(pk_to_plot, g, margin, [0.00005, 10.0], [10.0, 100000.0]);
 }
 
 function run_cl_interpolation(){
-  g = plot_cl_axes(margin);
-
-  console.log('paramValue', paramValue);
-  console.log('param_table_cl', param_table_cl)
-  console.log('cl_table', cl_table)
+  g = plot_axes(margin, "#cl", "l", [1, 5000], "C(l)", [1, 10000.0]);
 
   var cl_interp = interpolate(paramValue, param_table_cl, cl_table);
 
   var cl_to_plot = [];
-  for (var i = 0; i < cl_interp.length - 1; i++){
+  // First two values of data are funky so we start at i=2
+  for (var i = 2; i < cl_interp.length - 1; i++){
     cl_to_plot.push([cl_table[i][0], cl_interp[i]]);
   }
 
-  console.log('cl_to_plot');
-  console.log(cl_to_plot);
-
-  plot_cl(cl_to_plot, g, margin);
+  plot_spectrum(cl_to_plot, g, margin, [1, 5000], [1, 100000.0]);
 }
 
 //Given text data read in from d3.text, process into
@@ -55,19 +37,9 @@ function process_pk_table(error, textData){
 
   console.log("setting up pk table");
 
-
   pk_table = parse_pktable(textData);
-  console.log(pk_table)
-  console.log("setting up param table");
-
   param_table_pk = parse_param(textData);
-  console.log(param_table_pk)
-  console.log("setting up s8 table");
-
   s8_table_pk = parse_s8(textData);
-  console.log(s8_table_pk)
-
-  console.log("running interp");
 
   run_pk_interpolation();
 }

@@ -180,7 +180,6 @@ h_slider.oninput = function() {
 	om_sliderValue.innerHTML = parseFloat(new_om).toFixed(2);
     }
 
-
     //If we're using the same parameter, don't need to reload data
     if (oldParam == paramName){
 	run_pk_interpolation();
