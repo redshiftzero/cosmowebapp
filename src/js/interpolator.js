@@ -67,15 +67,6 @@ function run_pk_display(){
   q.await(process_pk_table);
 }
 
-function get_k_pk_from_table(pk_table, index){
-  //Given a P(k) table, get k and Pk array for a particular index
-  var d = [];
-  for (i = 0; i < pk_table[0].length; i++) {
-    d.push([pk_table[0][i], pk_table[index+1][i]]);
-  }
-  return d
-}
-
 function determine_bounding_indices(param, param_table) {
   lowerindex = 0;
   upperindex = 1;
