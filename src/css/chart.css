@@ -1,5 +1,14 @@
 * {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  color: black;
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: linear-gradient(to bottom right, #74ebd5, #acb6e5);
 }
 .axis {
   shape-rendering: crispEdges;
@@ -14,14 +23,25 @@ rect {
 text {
   shape-rendering: crispEdges;
 }
-#main {
-  max-width: 1060px;
+slider-container {
+  text-align: center;
+}
+header {
   position: relative;
+  margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
   display: block;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 10px 10px 0 0;
+}
+#main {
+  max-width: 600px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: inline;
+  text-align: center;
 }
 .slider {
   width: 435px;
@@ -30,12 +50,27 @@ text {
   padding-left: 40px;
  }
 footer {
-  position: fixed;
   font-size: 11px;
   text-align: center;
   bottom: 0;
   left: 0;
   height: 70px;
-  background-color: white;
   width: 100%;
 }
+.social:hover {
+  color: #000000;
+   -webkit-transform: scale(1.1);
+   -moz-transform: scale(1.1);
+   -o-transform: scale(1.1);
+}
+.social {
+   color: #333333;
+   -webkit-transform: scale(0.8);
+   /* Browser Variations: */
+
+   -moz-transform: scale(0.8);
+   -o-transform: scale(0.8);
+   -webkit-transition-duration: 0.5s;
+   -moz-transition-duration: 0.5s;
+   -o-transition-duration: 0.5s;
+ }
