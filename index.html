@@ -31,13 +31,14 @@
       <div id="fix-omegamh2-div" class="checkdiv">
 	<input id = "fix-omegamh2-checkbox" type = "checkbox"> Fix  &Omega;<sub>m</sub>h<sup>2</sup>
       </div>
-      
-      <svg width="960" height="400"></svg>
+
+      <svg id="pk" width="760" height="300"></svg>
+      <svg id="cl" width="760" height="300"></svg>
 
     </div>
 
-    <script src="./src/js/d3.js"></script>
-    <script src="./src/js/d3-queue.v3.min.js"></script>
+    <script src="./src/js/lib/d3.js"></script>
+    <script src="./src/js/lib/d3-queue.v3.min.js"></script>
     <script src="./src/js/sliders.js"></script>
     <script src="./src/js/checkboxes.js"></script>
     <script src="./src/js/chart.js"></script>
@@ -52,15 +53,18 @@
 
       //Stores P(k) table
       var pk_table = [];
+      var cl_table = [];
       //Stores values corresponding to P(k) table
-      var param_table;
-      //Stores sigma_8 values corresponding to P(k) table
-      var s8_table;
+      var param_table_pk;
+      var param_table_cl;
+      //Stores sigma_8 values
+      var s8_table_pk;
+      var s8_table_cl;
 
       set_defaults();
-      
+
       //this should be re-run every time we change parameters
-      run_pk_display();
+      run_display();
     </script>
   </body>
 
