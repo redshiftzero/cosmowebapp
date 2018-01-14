@@ -8,7 +8,7 @@ function plot_axes(margin){
 	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     g.attr("width",width);
     g.attr("height",height);
-    
+
 
     var x = d3.scaleLog().range([margin.left, width - margin.right]).domain([0.00005, 10.0]);
 
@@ -70,4 +70,29 @@ function plot_pk(data, g, margin) {
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
         .attr("d", line);
+}
+
+// Plot CMB angular power spectrum
+function plot_cl(data, g, margin) {
+  var width = g.attr("width");
+  var height = g.attr("height");
+
+  // x: angular scale
+  var x = d3.scaleLog().range([margin.left, width-margin.right]).domain([10, 5000]);
+
+  // y: CMB power
+  var y = d3.scaleLog().range([height-margin.bottom, margin.top]).domain([0.01, 200.0]);
+
+  var line = d3.line()
+      .x(function(d,i) { return x(data[i][0]); })
+      .y(function(d,i) { return y(data[i][1]); });
+
+  g.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 1.5)
+      .attr("d", line);
 }
