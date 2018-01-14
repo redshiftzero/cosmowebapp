@@ -2,8 +2,9 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50};
 
 //Interpolate P(k) table and plot
 function run_pk_interpolation(){
-  //Set up plot axes
-  g = plot_axes(margin, "#pk", "k", [0.00005, 10.0], "P(k)", [10.0, 1000000.0]);
+  var k_range = [0.00005, 10.0];
+  var pk_range = [10.0, 1000000.0];
+  g = plot_axes(margin, "#pk", "k", k_range, "P(k)", pk_range);
 
   var pk_interp = interpolate(paramValue, param_table_pk, pk_table);
 
@@ -13,11 +14,13 @@ function run_pk_interpolation(){
     pk_to_plot.push([pk_table[i][0], pk_interp[i]]);
   }
 
-  plot_spectrum(pk_to_plot, g, margin, [0.00005, 10.0], [10.0, 100000.0]);
+  plot_spectrum(pk_to_plot, g, margin, k_range, pk_range);
 }
 
 function run_cl_interpolation(){
-  g = plot_axes(margin, "#cl", "l", [1, 5000], "C(l)", [1, 10000.0]);
+  var l_range = [1, 5000];
+  var cl_range = [1, 10000.0];
+  g = plot_axes(margin, "#cl", "l", l_range, "C(l)", cl_range);
 
   var cl_interp = interpolate(paramValue, param_table_cl, cl_table);
 
@@ -27,7 +30,7 @@ function run_cl_interpolation(){
     cl_to_plot.push([cl_table[i][0], cl_interp[i]]);
   }
 
-  plot_spectrum(cl_to_plot, g, margin, [1, 5000], [1, 100000.0]);
+  plot_spectrum(cl_to_plot, g, margin, l_range, cl_range);
 }
 
 //Given text data read in from d3.text, process into
@@ -37,7 +40,7 @@ function process_pk_table(error, textData){
 
   console.log("setting up pk table");
 
-  pk_table = parse_pktable(textData);
+  pk_table = parse_table(textData);
   param_table_pk = parse_param(textData);
   s8_table_pk = parse_s8(textData);
 
@@ -49,7 +52,7 @@ function process_cl_table(error, textData){
 
   console.log("setting up cl table");
 
-  cl_table = parse_cltable(textData);
+  cl_table = parse_table(textData);
   param_table_cl = parse_param(textData);
   s8_table_cl = parse_s8(textData);
 
