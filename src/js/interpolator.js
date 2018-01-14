@@ -2,9 +2,9 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50};
 
 //Interpolate P(k) table and plot
 function run_interpolation(){
-   
+
     //Set up plot axes
-    g = plot_axes(margin);
+    g = plot_pk_axes(margin);
 
     //console.log("param table = ", param_table);
 
@@ -12,7 +12,7 @@ function run_interpolation(){
 
     //console.log("pk table = ", pk_table[0]);
     //console.log("pk interp 0 = ", pk_interp[0]);
-    
+
     //create new array with k and P(k) for plotting
     var pk_to_plot = [];
     for (var i = 0; i < pk_interp.length; i++){
@@ -31,11 +31,11 @@ function process_pk_table(error, textData){
     if (error) return console.log(error);
 
     console.log("setting up pk table");
-    
+
     pk_table = parse_pktable(textData);
     param_table = parse_param(textData);
     s8_table = parse_s8(textData);
-    
+
     run_interpolation();
 }
 
@@ -52,7 +52,7 @@ function run_pk_display(){
 	filename = 'data/pk_modeltype_fiducial_param_omch2.txt';
     }
     console.log("filename = ", filename);
-    
+
     var q = d3.queue();
     q.defer(d3.text, filename);
     console.log("filename = ", filename);
@@ -114,11 +114,11 @@ function interpolate(param, param_table, func_table) {
     //func_table is matrix of function evals (either P(k) or C(ell)
     //dimension is (1+len(param_table), len(P(k)))
     //first column is k
-    
+
     [lower_temp, upper_temp] = determine_bounding_indices(param, param_table);
     lowerindex = lower_temp;
     upperindex = upper_temp;
-    
+
     //Determine weights for function at lowerindex and upperindex
     param_lower = param_table[lowerindex];
     param_upper = param_table[upperindex];

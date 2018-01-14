@@ -1,5 +1,5 @@
 //Plot axes
-function plot_axes(margin){
+function plot_pk_axes(margin){
     d3.select("svg").selectAll("*").remove();
     var svg = d3.select("svg"),
 	margin = margin,
