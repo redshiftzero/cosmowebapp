@@ -21,6 +21,7 @@ function run_pk_interpolation(){
     pk_to_plot.push([pk_table[i][0], pk_interp[i]]);
   }
 
+  console.log('pk_to_plot')
   console.log(pk_to_plot)
 
   // Now plot interpolated P(k) and C(l)
@@ -30,12 +31,19 @@ function run_pk_interpolation(){
 function run_cl_interpolation(){
   g = plot_cl_axes(margin);
 
+  console.log('paramValue', paramValue);
+  console.log('param_table_cl', param_table_cl)
+  console.log('cl_table', cl_table)
+
   var cl_interp = interpolate(paramValue, param_table_cl, cl_table);
 
   var cl_to_plot = [];
   for (var i = 0; i < cl_interp.length - 1; i++){
     cl_to_plot.push([cl_table[i][0], cl_interp[i]]);
   }
+
+  console.log('cl_to_plot');
+  console.log(cl_to_plot);
 
   plot_cl(cl_to_plot, g, margin);
 }
@@ -69,7 +77,7 @@ function process_cl_table(error, textData){
 
   console.log("setting up cl table");
 
-  pk_table = parse_cltable(textData);
+  cl_table = parse_cltable(textData);
   param_table_cl = parse_param(textData);
   s8_table_cl = parse_s8(textData);
 

@@ -12,7 +12,7 @@ function plot_pk_axes(margin){
 
     var x = d3.scaleLog().range([margin.left, width - margin.right]).domain([0.00005, 10.0]);
 
-    var y = d3.scaleLog().range([height - margin.top, margin.bottom]).domain([10.0, 100000.0]);
+    var y = d3.scaleLog().range([height - margin.top, margin.bottom]).domain([10.0, 1000000.0]);
 
 
     var xAxis = d3.axisBottom()
@@ -58,10 +58,10 @@ function plot_cl_axes(margin){
     g.attr("height",height);
 
       // x: angular scale
-      var x = d3.scaleLog().range([margin.left, width-margin.right]).domain([10, 5000]);
+      var x = d3.scaleLog().range([margin.left, width-margin.right]).domain([1, 5000]);
 
       // y: CMB power
-      var y = d3.scaleLog().range([height-margin.bottom, margin.top]).domain([0.01, 200.0]);
+      var y = d3.scaleLog().range([height-margin.bottom, margin.top]).domain([1, 10000.0]);
 
     var xAxis = d3.axisBottom()
       .scale(x);
@@ -126,14 +126,20 @@ function plot_cl(data, g, margin) {
   var height = g.attr("height");
 
   // x: angular scale
-  var x = d3.scaleLog().range([margin.left, width-margin.right]).domain([10, 5000]);
+  var x = d3.scaleLog().range([margin.left, width-margin.right]).domain([1, 5000]);
 
   // y: CMB power
-  var y = d3.scaleLog().range([height-margin.bottom, margin.top]).domain([0.01, 200.0]);
+  var y = d3.scaleLog().range([height-margin.bottom, margin.top]).domain([1, 100000.0]);
 
   var line = d3.line()
       .x(function(d,i) { return x(data[i][0]); })
       .y(function(d,i) { return y(data[i][1]); });
+
+  // First two values cause trouble so shift them into the void
+  var remove = data.shift();
+  var remove = data.shift();
+
+  console.log(data);
 
   g.append("path")
       .datum(data)
