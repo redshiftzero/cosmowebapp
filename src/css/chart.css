@@ -1,19 +1,13 @@
 * {
-  font-family: 'Open Sans', sans-serif;
   color: black;
 }
 body {
   height: 100%;
   margin: 0;
-  background: linear-gradient(to bottom right, #74ebd5, #acb6e5);
   background-repeat: no-repeat;
   background-attachment: fixed;
-}
-h1 {
-  text-align: center;
-  font-family: 'Poiret One', cursive;
-  text-align: center;
-  padding: 10px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 .axis {
   shape-rendering: crispEdges;
@@ -28,15 +22,17 @@ rect {
 text {
   shape-rendering: crispEdges;
 }
+slider-container {
+  text-align: center;
+}
 header {
-  max-width: 600px;
   position: relative;
   margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
   display: block;
   margin: 0 auto;
-  padding: 10px 10px 0 100px;
+  padding: 10px 10px 0 0;
 }
 #main {
   max-width: 1060px;
