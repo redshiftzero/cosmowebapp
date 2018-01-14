@@ -4,10 +4,12 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50};
 function run_interpolation(){
   //Set up plot axes
   g = plot_pk_axes(margin);
+  h = plot_cl_axes(margin);
 
   //console.log("param table = ", param_table);
 
-  var pk_interp = interpolate(paramValue, param_table, pk_table) ;
+  var pk_interp = interpolate(paramValue, param_table, pk_table);
+  var cl_interp = interpolate(paramValue, param_table, cl_table);
 
   //console.log("pk table = ", pk_table[0]);
   //console.log("pk interp 0 = ", pk_interp[0]);
@@ -15,13 +17,19 @@ function run_interpolation(){
   //create new array with k and P(k) for plotting
   var pk_to_plot = [];
   for (var i = 0; i < pk_interp.length; i++){
-  //console.log("test = ", pk_initial[i][0]);
-  //console.log("length = ", pk_interp.length);
-  pk_to_plot.push([pk_table[i][0], pk_interp[i]]);
+    //console.log("test = ", pk_initial[i][0]);
+    //console.log("length = ", pk_interp.length);
+    pk_to_plot.push([pk_table[i][0], pk_interp[i]]);
   }
 
-  //Now plot interpolated P(k)
+  // Do the same for C(l)
+  for (var i = 0; i < cl_interp.length; i++){
+    cl_to_plot.push([cl_table[i][0], cl_interp[i]]);
+  }
+
+  // Now plot interpolated P(k) and C(l)
   plot_pk(pk_to_plot, g, margin);
+  plot_cl(cl_to_plot, g, margin);
 }
 
 //Given text data read in from d3.text, process into
@@ -67,7 +75,6 @@ function get_k_pk_from_table(pk_table, index){
   }
   return d
 }
-
 
 function determine_bounding_indices(param, param_table) {
   lowerindex = 0;
