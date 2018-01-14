@@ -2,69 +2,72 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Poiret+One" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="src/css/chart.css">
+    <link href="src/css/fontawesome/fontawesome-all.css" rel="stylesheet">
   </head>
   <body>
-    <div id="main">
-      <h1>Matter Power Spectrum</h1>
-      <p>See how the matter power spectrum changes as a function of cosmological parameters. We assume flatness.  More useful expository text goes here.</p>
-      <div id="omega-lambda-div" class="sliderdiv">
-        <input id="omega-lambda-slider" class="slider" type="range" min="0.2" max="0.9" step="0.01" value="0.7"/>
-        <span id="omega-lambda-range-value">0.7</span> &Omega;<sub>&Lambda;</sub>
-      </div>
-
-      <div id="omega-m-div" class="sliderdiv">
-        <input id="omega-m-slider" class="slider" type="range" min="0.1" max="0.8" step="0.01" value="1.0"/>
-        <span id="omega-m-range-value">0.3</span> &Omega;<sub>m</sub>
-      </div>
-
-      <div id="omega-mh2-div" class="sliderdiv">
-        <input id="omega-mh2-slider" class="slider" type="range" min="0.01" max="0.5" step="0.01" value="0.122"/>
-        <span id="omega-mh2-range-value">0.25</span> &Omega;<sub>m</sub>h<sup>2</sup>
-      </div>
-
-      <div id="h-div" class="sliderdiv">
-        <input id="h-slider" class="slider" type="range" min="0.5" max="1.0" step="0.01" value="0.25"/>
-        <span id="h-range-value">0.7</span> h
-      </div>
-
-      <div id="fix-omegamh2-div" class="checkdiv">
-	<input id = "fix-omegamh2-checkbox" type = "checkbox"> Fix  &Omega;<sub>m</sub>h<sup>2</sup>
-      </div>
-      
-      <svg width="960" height="400"></svg>
-
+  <header>
+    <h1>Matter Power Spectrum</h1>
+    <p>See how the matter power spectrum changes as a function of cosmological parameters. We assume flatness.  More useful expository text goes here.</p>
+    <div id="omega-lambda-div" class="sliderdiv">
+      <input id="omega-lambda-slider" class="slider" type="range" min="0.2" max="0.9" step="0.01" value="0.7"/>
+      <span id="omega-lambda-range-value">0.7</span> &Omega;<sub>&Lambda;</sub> <i class="fa fa-question-circle" aria-hidden="true"></i>
     </div>
 
-    <script src="./src/js/d3.js"></script>
-    <script src="./src/js/d3-queue.v3.min.js"></script>
-    <script src="./src/js/sliders.js"></script>
-    <script src="./src/js/checkboxes.js"></script>
-    <script src="./src/js/chart.js"></script>
-    <script src="./src/js/interpolator.js"></script>
-    <script src="./src/js/parse_data.js"></script>
-    <script>
-      //Default values
-      var paramValue = 0.3;       //this is a bads
-      var paramName = "Om";
-      var fix_omegamh2 = false;
-      var fix_flat = true;
+    <div id="omega-m-div" class="sliderdiv">
+      <input id="omega-m-slider" class="slider" type="range" min="0.1" max="0.8" step="0.01" value="1.0"/>
+      <span id="omega-m-range-value">0.3</span> &Omega;<sub>m</sub> <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </div>
 
-      //Stores P(k) table
-      var pk_table = [];
-      //Stores values corresponding to P(k) table
-      var param_table;
-      //Stores sigma_8 values corresponding to P(k) table
-      var s8_table;
+    <div id="omega-mh2-div" class="sliderdiv">
+      <input id="omega-mh2-slider" class="slider" type="range" min="0.01" max="0.5" step="0.01" value="0.122"/>
+      <span id="omega-mh2-range-value">0.25</span> &Omega;<sub>m</sub>h<sup>2</sup> <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </div>
 
-      set_defaults();
-      
-      //this should be re-run every time we change parameters
-      run_pk_display();
-    </script>
+    <div id="h-div" class="sliderdiv">
+      <input id="h-slider" class="slider" type="range" min="0.5" max="1.0" step="0.01" value="0.25"/>
+      <span id="h-range-value">0.7</span> h <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </div>
+
+    <div id="fix-omegamh2-div" class="checkdiv">
+    <input id = "fix-omegamh2-checkbox" type = "checkbox"> Fix  &Omega;<sub>m</sub>h<sup>2</sup> <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </div>
+  </header>
+
+  <div id="main">
+    <svg width="960" height="400"></svg>
+  </div>
+
+  <script src="./src/js/d3.js"></script>
+  <script src="./src/js/d3-queue.v3.min.js"></script>
+  <script src="./src/js/sliders.js"></script>
+  <script src="./src/js/checkboxes.js"></script>
+  <script src="./src/js/chart.js"></script>
+  <script src="./src/js/interpolator.js"></script>
+  <script src="./src/js/parse_data.js"></script>
+  <script>
+    //Default values
+    var paramValue = 0.3;       //this is a bads
+    var paramName = "Om";
+    var fix_omegamh2 = false;
+    var fix_flat = true;
+
+    //Stores P(k) table
+    var pk_table = [];
+    //Stores values corresponding to P(k) table
+    var param_table;
+    //Stores sigma_8 values corresponding to P(k) table
+    var s8_table;
+
+    set_defaults();
+
+    //this should be re-run every time we change parameters
+    run_pk_display();
+  </script>
   </body>
 
   <footer>
-  Footer text and link to GitHub will go here
+  <a href="https://github.com/redshiftzero/cosmowebapp"><i class="fab fa-github fa-3x social"></i></a>
   </footer>
 </html>

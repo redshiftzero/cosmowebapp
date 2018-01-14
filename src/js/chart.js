@@ -8,24 +8,21 @@ function plot_axes(margin){
 	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     g.attr("width",width);
     g.attr("height",height);
-    
 
     var x = d3.scaleLog().range([margin.left, width - margin.right]).domain([0.00005, 10.0]);
 
     var y = d3.scaleLog().range([height - margin.top, margin.bottom]).domain([10.0, 100000.0]);
 
-
     var xAxis = d3.axisBottom()
       .scale(x);
 
     var yAxis = d3.axisLeft()
-	.scale(y);
+	    .scale(y);
 
     g.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
         .append("text")
-        .attr("fill", "#000")
         .attr("x", 870)
         .attr("y", -4)
         .attr("dx", "0.71em")
@@ -37,7 +34,6 @@ function plot_axes(margin){
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .call(yAxis)
         .append("text")
-        .attr("fill", "#000")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", "0.71em")
