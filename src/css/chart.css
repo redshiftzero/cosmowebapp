@@ -4,10 +4,11 @@
 body {
   height: 100%;
   margin: 0;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: linear-gradient(to bottom right, #74ebd5, #acb6e5);
 }
 .axis {
   shape-rendering: crispEdges;
@@ -35,13 +36,11 @@ header {
   padding: 10px 10px 0 0;
 }
 #main {
-  max-width: 1060px;
+  max-width: 600px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  display: block;
-  margin: 0 auto;
-  padding: 0 10px;
+  display: inline;
   text-align: center;
 }
 .slider {
@@ -51,7 +50,6 @@ header {
   padding-left: 40px;
  }
 footer {
-  position: fixed;
   font-size: 11px;
   text-align: center;
   bottom: 0;
