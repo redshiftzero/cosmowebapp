@@ -11,7 +11,7 @@ var h_slider = document.getElementById("h-slider");
 var h_sliderValue = document.getElementById("h-range-value");
 
 function set_defaults(){
-    //These should match what was used to generate P(k)
+    //These should match what was used to generate P(k) and C(l)
     var default_olam = 0.75102;
     var default_om = 0.2489;
     var default_omh2 = 0.122;
@@ -42,7 +42,7 @@ olam_slider.oninput = function() {
     //Set everything to defaults
     set_defaults();
 
-    //Set Omega_lam slider values 
+    //Set Omega_lam slider values
     olam_slider.value = currentValue;
     olam_sliderValue.innerHTML = parseFloat(currentValue).toFixed(2);
 
@@ -50,7 +50,7 @@ olam_slider.oninput = function() {
     om_slider.value = om;
     om_sliderValue.innerHTML = parseFloat(om).toFixed(2);
 
-   
+
     if (fix_omegamh2){
 	var omh2 = omh2_slider.value;
 	var newh = Math.sqrt(omh2/paramValue);
@@ -67,12 +67,14 @@ olam_slider.oninput = function() {
 
     //If we're using the same parameter, don't need to reload data
     if (oldParam == paramName){
-	run_interpolation();
+	run_pk_interpolation();
+  run_cl_interpolation();
     }
     //Otherwise reload data
     if (oldParam != paramName){
 	run_pk_display();
-    }   
+  run_cl_display();
+    }
 }
 
 
@@ -94,7 +96,7 @@ om_slider.oninput = function() {
     var new_olam = 1.0-paramValue;
     olam_slider.value = new_olam;
     olam_sliderValue.innerHTML = parseFloat(new_olam).toFixed(2);
-    
+
     if (fix_omegamh2){
 	var omh2 = omh2_slider.value;
 	var newh = Math.sqrt(omh2/paramValue);
@@ -111,12 +113,14 @@ om_slider.oninput = function() {
 
     //If we're using the same parameter, don't need to reload data
     if (oldParam == paramName){
-	run_interpolation();
+	run_pk_interpolation();
+  run_cl_interpolation();
     }
     //Otherwise reload data
     if (oldParam != paramName){
 	run_pk_display();
-    }   
+  run_cl_display();
+    }
 }
 
 omh2_slider.oninput = function() {
@@ -127,7 +131,7 @@ omh2_slider.oninput = function() {
     paramName = "Omh2";
     //Set everything to defaults
     set_defaults();
-  
+
     if (!fix_omegamh2){
 	//Set Omega_mh2 to desired value
 	omh2_slider.value = paramValue;
@@ -140,11 +144,13 @@ omh2_slider.oninput = function() {
 
 	//If we're using the same parameter, don't need to reload data
 	if (oldParam == paramName){
-	    run_interpolation();
+	    run_pk_interpolation();
+      run_cl_interpolation();
 	}
 	//Otherwise reload data
 	if (oldParam != paramName){
 	    run_pk_display();
+      run_cl_display();
 	}
     }
 }
@@ -174,15 +180,15 @@ h_slider.oninput = function() {
 	om_sliderValue.innerHTML = parseFloat(new_om).toFixed(2);
     }
 
-    
+
     //If we're using the same parameter, don't need to reload data
     if (oldParam == paramName){
-	run_interpolation();
+	run_pk_interpolation();
+  run_cl_interpolation();
     }
     //Otherwise reload data
     if (oldParam != paramName){
 	run_pk_display();
-    }   
+  run_cl_display();
+    }
 }
-
-

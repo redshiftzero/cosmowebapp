@@ -5,6 +5,7 @@ fixomh2_checkBox.onclick = function() {
   fix_omegamh2 = fixomh2_checkBox.checked;
   console.log("fix omegamh2 = ", fix_omegamh2);
   run_pk_display();
+  run_cl_display();
 }
 
 //fixflat_checkBox.onclick = function() {

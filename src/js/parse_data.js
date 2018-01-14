@@ -46,6 +46,26 @@ function parse_pktable(data){
 	//d.push(line);
 	d.push(e);
     }
+    console.log('parse_pktable')
+    return d;
+}
+
+function parse_cltable(data){
+    // Read in CAMB data files and return array of l and C(l)
+    var lines = data.split('\n');
+    var d = [];
+    //Need the -1 here?
+    for (i = 7; i < lines.length; i++) {
+	var line = lines[i].split(' ');
+	var e = [];
+	for (j = 0; j < line.length; j++){
+	    e.push(parseFloat(line[j]));
+	}
+	//d.push(line);
+	d.push(e);
+    }
+    console.log('parse_cltable')
+    console.log(d)
     return d;
 }
 

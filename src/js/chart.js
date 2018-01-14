@@ -1,7 +1,7 @@
 //Plot axes
 function plot_pk_axes(margin){
-    d3.select("svg").selectAll("*").remove();
-    var svg = d3.select("svg"),
+    d3.select("#pk").selectAll("*").remove();
+    var svg = d3.select("#pk"),
 	margin = margin,
 	width = +svg.attr("width") - margin.left - margin.right,
 	height = +svg.attr("height") - margin.top - margin.bottom,
@@ -44,6 +44,54 @@ function plot_pk_axes(margin){
         .attr("font-size", "15px")
         .attr("text-anchor", "end")
         .text("P(k)");
+    return g
+}
+
+function plot_cl_axes(margin){
+    d3.select("#cl").selectAll("*").remove();
+    var svg = d3.select("#cl"),
+	margin = margin,
+	width = +svg.attr("width") - margin.left - margin.right,
+	height = +svg.attr("height") - margin.top - margin.bottom,
+	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    g.attr("width",width);
+    g.attr("height",height);
+
+      // x: angular scale
+      var x = d3.scaleLog().range([margin.left, width-margin.right]).domain([10, 5000]);
+
+      // y: CMB power
+      var y = d3.scaleLog().range([height-margin.bottom, margin.top]).domain([0.01, 200.0]);
+
+    var xAxis = d3.axisBottom()
+      .scale(x);
+
+    var yAxis = d3.axisLeft()
+	.scale(y);
+
+    g.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .append("text")
+        .attr("fill", "#000")
+        .attr("x", 870)
+        .attr("y", -4)
+        .attr("dx", "0.71em")
+        .attr("font-size", "15px")
+        .attr("text-anchor", "middle")
+        .text("l");
+
+    g.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(yAxis)
+        .append("text")
+        .attr("fill", "#000")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", "0.71em")
+        .attr("font-size", "15px")
+        .attr("text-anchor", "end")
+        .text("C(l)");
     return g
 }
 
