@@ -57,43 +57,27 @@ function process_cl_table(error, textData){
 }
 
 //Load data and run plotting
-function run_pk_display(){
+function run_display(){
   console.log("Preparing for ", paramName);
   if (paramName == 'Om' && !fix_omegamh2){
-  	filename = 'data/pk_modeltype_fiducial_param_om.txt';
+  	pk_filename = 'data/pk_modeltype_fiducial_param_om.txt';
+    cl_filename = 'data/cl_modeltype_fiducial_param_om.txt';
   }
   if (paramName == 'Om' && fix_omegamh2){
-  	filename = 'data/pk_modeltype_fixomch2_param_om.txt';
+  	pk_filename = 'data/pk_modeltype_fixomch2_param_om.txt';
+    cl_filename = 'data/cl_modeltype_fixomch2_param_om.txt';
   }
   if (paramName == 'Omh2' && !fix_omegamh2){
-  	filename = 'data/pk_modeltype_fiducial_param_omch2.txt';
+  	pk_filename = 'data/pk_modeltype_fiducial_param_omch2.txt';
+    cl_filename = 'data/cl_modeltype_fiducial_param_omch2.txt';
   }
-  console.log("filename = ", filename);
 
   var q1 = d3.queue();
-  q1.defer(d3.text, filename);
-  console.log("filename = ", filename);
-
+  q1.defer(d3.text, pk_filename);
   q1.await(process_pk_table);
-}
-
-function run_cl_display(){
-  console.log("Preparing for ", paramName);
-  if (paramName == 'Om' && !fix_omegamh2){
-  	filename = 'data/cl_modeltype_fiducial_param_om.txt';
-  }
-  if (paramName == 'Om' && fix_omegamh2){
-  	filename = 'data/cl_modeltype_fixomch2_param_om.txt';
-  }
-  if (paramName == 'Omh2' && !fix_omegamh2){
-  	filename = 'data/cl_modeltype_fiducial_param_omch2.txt';
-  }
-  console.log("filename = ", filename);
 
   var q2 = d3.queue();
-  q2.defer(d3.text, filename);
-  console.log("filename = ", filename);
-
+  q2.defer(d3.text, cl_filename);
   q2.await(process_cl_table);
 }
 
