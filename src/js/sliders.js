@@ -22,8 +22,10 @@ function set_defaults() {
   var default_olam = 0.75102;
   var default_om = 0.2489;
   var default_omh2 = 0.122;
+  var default_tau = 0.06;
   var default_h = 0.7;
-
+  var default_obh2 = 0.022;
+    
   olam_slider.value = default_olam;
   olam_sliderValue.innerHTML = parseFloat(default_olam).toFixed(2);
 
@@ -35,6 +37,12 @@ function set_defaults() {
 
   h_slider.value = default_h;
   h_sliderValue.innerHTML = parseFloat(default_h).toFixed(2);
+
+  tau_slider.value = default_tau;
+  tau_sliderValue.innerHTML = parseFloat(default_tau).toFixed(2);
+
+  obh2_slider.value = default_obh2;
+  obh2_sliderValue.innerHTML = parseFloat(default_obh2).toFixed(2);
 }
 
 function reload_if_needed(oldParam, paramName) {
