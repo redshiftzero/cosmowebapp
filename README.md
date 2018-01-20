@@ -1,5 +1,6 @@
 # cosmowebapp
-cosmology webapp
+
+Interactive cosmological power spectra using `d3.js`.
 
 ## Developer Setup
 
