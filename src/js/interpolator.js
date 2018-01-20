@@ -74,6 +74,10 @@ function run_display(){
   	pk_filename = 'data/pk_modeltype_fiducial_param_omch2.txt';
     cl_filename = 'data/cl_modeltype_fiducial_param_omch2.txt';
   }
+  if (paramName == 'tau'){
+      pk_filename = 'data/pk_modeltype_fiducial_param_tau.txt';
+      cl_filename = 'data/cl_modeltype_fiducial_param_tau.txt';
+  }
 
   var q1 = d3.queue();
   q1.defer(d3.text, pk_filename);
