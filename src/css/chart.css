@@ -44,11 +44,8 @@ header {
   text-align: center;
 }
 .slider {
-  width: 435px;
+  width: 75%;
 }
-.sliderdiv{
-  padding-left: 40px;
- }
 footer {
   font-size: 11px;
   text-align: center;
