@@ -137,30 +137,34 @@ omh2_slider.oninput = function() {
   }
 }
 
+//Sliding h is like changing
 h_slider.oninput = function() {
-  var oldParam = paramName;
-  var currentValue = this.value;
-  h_sliderValue.innerHTML = parseFloat(currentValue).toFixed(2);
-  paramValue = currentValue;
-  paramName = "h";
-  //Set everything to defaults
-  set_defaults();
-  //Set this slider to desired value
-  h_slider.value = paramValue;
-  h_sliderValue.innerHTML = parseFloat(paramValue).toFixed(2);
-
-  if (!fix_omegamh2){
-    var om = om_slider.value;
-    var new_omh2 = om*paramValue*paramValue;
-    omh2_slider.value = new_omh2;
-    omh2_sliderValue.innerHTML = parseFloat(new_omh2).toFixed(2);
-  }
-  if (fix_omegamh2){
-    var omh2 = omh2_slider.value;
-    var new_om = omh2/(paramValue*paramValue);
-    om_slider.value = new_om;
-    om_sliderValue.innerHTML = parseFloat(new_om).toFixed(2);
-  }
-
-  reload_if_needed(oldParam, paramName);
+    var oldParam = paramName;
+    var currentValue = this.value;
+    h_sliderValue.innerHTML = parseFloat(currentValue).toFixed(2);
+    
+    //Set everything to defaults
+    set_defaults();
+    //Set this slider to desired value
+    h_slider.value = currentValue;
+    h_sliderValue.innerHTML = parseFloat(currentValue).toFixed(2);
+    
+    if (!fix_omegamh2){
+	var om = om_slider.value;
+	var new_omh2 = om*currentValue*currentValue;
+	paramName = 'Omh2'
+	paramValue = new_omh2;
+	omh2_slider.value = new_omh2;
+	omh2_sliderValue.innerHTML = parseFloat(new_omh2).toFixed(2);
+    }
+    if (fix_omegamh2){
+	var omh2 = omh2_slider.value;
+	var new_om = omh2/(currentValue*currentValue);
+	paramName = 'Om'
+	paramValue = new_om;
+	om_slider.value = new_om;
+	om_sliderValue.innerHTML = parseFloat(new_om).toFixed(2);
+    }
+    
+    reload_if_needed(oldParam, paramName);
 }
