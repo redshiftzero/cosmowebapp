@@ -7,19 +7,25 @@ var om_sliderValue = document.getElementById("omega-m-range-value");
 var omh2_slider = document.getElementById("omega-mh2-slider");
 var omh2_sliderValue = document.getElementById("omega-mh2-range-value");
 
+var obh2_slider = document.getElementById("omega-bh2-slider");
+var obh2_sliderValue = document.getElementById("omega-bh2-range-value");
+
 var h_slider = document.getElementById("h-slider");
 var h_sliderValue = document.getElementById("h-range-value");
 
 var tau_slider = document.getElementById("tau-slider");
 var tau_sliderValue = document.getElementById("tau-range-value");
 
+
 function set_defaults() {
   //These should match what was used to generate P(k) and C(l)
   var default_olam = 0.75102;
   var default_om = 0.2489;
   var default_omh2 = 0.122;
+  var default_tau = 0.06;
   var default_h = 0.7;
-
+  var default_obh2 = 0.022;
+    
   olam_slider.value = default_olam;
   olam_sliderValue.innerHTML = parseFloat(default_olam).toFixed(2);
 
@@ -31,6 +37,12 @@ function set_defaults() {
 
   h_slider.value = default_h;
   h_sliderValue.innerHTML = parseFloat(default_h).toFixed(2);
+
+  tau_slider.value = default_tau;
+  tau_sliderValue.innerHTML = parseFloat(default_tau).toFixed(2);
+
+  obh2_slider.value = default_obh2;
+  obh2_sliderValue.innerHTML = parseFloat(default_obh2).toFixed(2);
 }
 
 function reload_if_needed(oldParam, paramName) {
@@ -181,9 +193,23 @@ tau_slider.oninput = function() {
     //Set everything to defaults
     set_defaults();
     
-    //Set Omega_mh2 to desired value
     tau_slider.value = paramValue;
     tau_sliderValue.innerHTML = parseFloat(paramValue).toFixed(2);
+    
+    reload_if_needed(oldParam, paramName);
+}
+
+obh2_slider.oninput = function() {
+    var oldParam = paramName;
+    var currentValue = this.value;
+    
+    paramValue = currentValue;
+    paramName = "Obh2";
+    //Set everything to defaults
+    set_defaults();
+    
+    obh2_slider.value = paramValue;
+    obh2_sliderValue.innerHTML = parseFloat(paramValue).toFixed(2);
     
     reload_if_needed(oldParam, paramName);
 }

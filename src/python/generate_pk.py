@@ -52,7 +52,7 @@ def get_pk_cell(params):
 
 fiducial_model = {'H0':70., 'ombh2':0.022, 'omch2':0.122, 'omk':0., 'ns':0.96, 'As':2e-09, 'tau':0.06}    
 model_type = 'fiducial' #fiducial or fixomch2
-param_name = 'tau'
+param_name = 'obh2'
 
 if (param_name == 'om'):
     min_val = 0.1
@@ -72,6 +72,11 @@ if (param_name == 'omch2'):
 if (param_name == 'tau'):
     min_val = 0.01
     max_val = 0.2
+    num_val = 10
+    param_list = np.linspace(min_val, max_val, num = num_val)
+if (param_name == 'obh2'):
+    min_val = 0.01
+    max_val = 0.05
     num_val = 10
     param_list = np.linspace(min_val, max_val, num = num_val)
 
@@ -95,6 +100,8 @@ for pi in xrange(0,len(param_list)):
             this_model['H0'] = H0
         if (param_name == 'tau'):
             this_model['tau'] = param_list[pi]
+        if (param_name == 'obh2'):
+            this_model['ombh2'] = param_list[pi]
     #Fix Omega_Mh^2
     if model_type == 'fixomch2':
         if (param_name == 'om'):
