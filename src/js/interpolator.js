@@ -74,6 +74,10 @@ function run_display(){
   	pk_filename = 'data/pk_modeltype_fiducial_param_omch2.txt';
     cl_filename = 'data/cl_modeltype_fiducial_param_omch2.txt';
   }
+  if (paramName == 'Obh2'){
+      pk_filename = 'data/pk_modeltype_fiducial_param_obh2.txt';
+      cl_filename = 'data/cl_modeltype_fiducial_param_obh2.txt';
+  }
   if (paramName == 'tau'){
       pk_filename = 'data/pk_modeltype_fiducial_param_tau.txt';
       cl_filename = 'data/cl_modeltype_fiducial_param_tau.txt';
