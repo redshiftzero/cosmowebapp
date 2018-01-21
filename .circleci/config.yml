@@ -14,4 +14,4 @@ jobs:
 
       - run: npm install qunit-phantomjs-runner
 
-      - run: phantomjs test/runner.js test/test.html
+      - run: node_modules/.bin/phantomjs test/runner.js test/test.html
