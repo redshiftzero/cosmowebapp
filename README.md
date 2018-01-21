@@ -1,5 +1,5 @@
 # cosmowebapp
-[![CircleCI](https://circleci.com/gh/redshiftzero/cosmowebapp.svg?style=svg)](https://circleci.com/gh/redshiftzero/cosmowebapp)
+[![CircleCI](https://circleci.com/gh/redshiftzero/cosmowebapp/tree/master.svg?style=svg&circle-token=5739fb2605ead621f315d9f5e64b55c57d6c4c0f)](https://circleci.com/gh/redshiftzero/cosmowebapp/tree/master)
 
 Interactive cosmological power spectra using `d3.js`
 
