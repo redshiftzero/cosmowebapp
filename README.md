@@ -1,6 +1,7 @@
 # cosmowebapp
+[![CircleCI](https://circleci.com/gh/redshiftzero/cosmowebapp.svg?style=svg)](https://circleci.com/gh/redshiftzero/cosmowebapp)
 
-Interactive cosmological power spectra using `d3.js`.
+Interactive cosmological power spectra using `d3.js`
 
 ## Developer Setup
 
