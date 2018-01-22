@@ -6,8 +6,6 @@ function plot_axes(margin, svg_id, xlabel, xrange, ylabel, yrange, title){
 	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   g.attr("width",width);
   g.attr("height",height);
-  console.log('width', width);
-  console.log('height', height);
 
   var x = d3.scaleLog().range([margin.left, width - margin.right]).domain(xrange);
 
