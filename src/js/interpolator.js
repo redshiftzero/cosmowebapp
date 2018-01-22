@@ -38,8 +38,6 @@ function run_cl_interpolation(){
 function process_pk_table(error, textData){
   if (error) return console.log(error);
 
-  console.log("setting up pk table");
-
   pk_table = parse_table(textData);
   param_table_pk = parse_param(textData);
   s8_table_pk = parse_s8(textData);
@@ -49,8 +47,6 @@ function process_pk_table(error, textData){
 
 function process_cl_table(error, textData){
   if (error) return console.log(error);
-
-  console.log("setting up cl table");
 
   cl_table = parse_table(textData);
   param_table_cl = parse_param(textData);
