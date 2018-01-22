@@ -1,10 +1,10 @@
-var margin = {top: 20, right: 20, bottom: 30, left: 50};
+var margin = {top: 20, right: 20, bottom: 30, left: 25};
 
 //Interpolate P(k) table and plot
 function run_pk_interpolation(){
   var k_range = [0.00005, 5.0];
   var pk_range = [50.0, 100000.0];
-  g = plot_axes(margin, "#pk", "k (wavenumber)", k_range, "P(k)", pk_range, "Matter Power Spectrum");
+    g = plot_axes(margin, "#pk", "k [Mpc/h]", k_range, "P(k) [(Mpc/h)\u00B3]", pk_range, "Matter Power Spectrum");
 
   var pk_interp = interpolate(paramValue, param_table_pk, pk_table);
 
@@ -20,7 +20,7 @@ function run_pk_interpolation(){
 function run_cl_interpolation(){
   var l_range = [1, 5000];
   var cl_range = [50, 10000.0];
-  g = plot_axes(margin, "#cl", "l (angular scale)", l_range, "C(l)", cl_range, "CMB Angular Power Spectrum");
+  g = plot_axes(margin, "#cl", "\u2113 (multipole)", l_range, "\u2113(\u2113+1)C(\u2113)/2\u03C0", cl_range, "CMB Angular Power Spectrum");
 
   var cl_interp = interpolate(paramValue, param_table_cl, cl_table);
 
