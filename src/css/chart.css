@@ -8,7 +8,7 @@ body {
   padding-bottom: 2rem;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background: linear-gradient(to bottom right, #74ebd5, #acb6e5);
+  background: linear-gradient(to bottom right, #74ebd5, #acb6e4);
 }
 .axis {
   shape-rendering: crispEdges;
@@ -34,6 +34,9 @@ header {
   display: block;
   margin: 0 auto;
   padding: 10px 10px 0 0;
+}
+h1{
+    text-align:center;
 }
 #main {
   max-width: 600px;
