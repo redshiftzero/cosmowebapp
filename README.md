@@ -8,7 +8,7 @@ Interactive cosmological power spectra using `d3.js`
 ```
 git clone git@github.com:redshiftzero/cosmowebapp.git
 cd cosmowebapp
-python -m SimpleHTTPServer
+python3 -m http.server
 ```
 
 Now you can navigate to `localhost:8000` in your favorite browser and begin! Simply navigate to `localhost:8000/test/test.html` to run unit tests.
